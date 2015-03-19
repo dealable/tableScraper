@@ -1,7 +1,7 @@
 Router.configure
   layoutTemplate: 'ApplicationLayout'
-#  yieldRegions:
-#    navbar: to: 'top'
+  yieldRegions:
+    navbar: to: 'top'
 #    urlside: to: 'aside'
 #    urlbottom: to: 'footer'
 
