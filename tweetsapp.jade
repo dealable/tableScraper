@@ -22,51 +22,61 @@ template(name='navbar')
 
 template(name='tweets')
   h1 Rant!
+  .input-group
+    span.input-group-addon url
+    input.form-control#tb_url(type='text', aria-describedby='basic-addon2'
+      , value='http://www.hockey-reference.com/players/s/shacked01.html')
   p.lead
     ul.list-group
       li.list-group-item
         button.btn.btn-primary(type='button') Header 
           span.badge #{scrapedHeaderCount}
         | #{scrapedHeader}
-        // {{ getData "header" }}
 
       li.list-group-item
         button.btn.btn-primary(type='button') Data: 
           span.badge #{scrapedDataCount}
         | #{scrapedData}
 
-  form#infoHeader
-    .input-group
-      span.input-group-addon url
-      input.form-control(type='text', aria-describedby='basic-addon2'
-        , name='headerUrl'
-        , value='http://www.hockey-reference.com/players/s/shacked01.html')
+  .input-group
+    span.input-group-addon selector
+    input.form-control#tb_header(type='text', aria-describedby='basic-addon1'
+      , value='#stats_basic_nhl > thead > tr:nth-child(2)')
 
-    .input-group
-      span.input-group-addon selector
-      input.form-control(type='text', aria-describedby='basic-addon1'
-        , name='headerFormat'
-        , value='#stats_basic_nhl > thead > tr:nth-child(2)')
-
-    input(type='submit', value='Get Header')
-
+  input#bt_header(type='submit', value='Get Header using cheerio.js')
+  br
   br
 
-  form#infoData
-    .input-group
-      span.input-group-addon url
-      input.form-control(type='text', aria-describedby='basic-addon2'
-        , name='dataUrl'
-        , value='http://www.hockey-reference.com/players/s/shacked01.html')
+  .input-group
+    span.input-group-addon selector
+    input.form-control#tb_data(type='text', aria-describedby='basic-addon1'
+      , value='#stats_basic_nhl > tbody > tr')
 
-    .input-group
-      span.input-group-addon selector
-      input.form-control(type='text', aria-describedby='basic-addon1'
-        , name='dataFormat'
-        , value='#stats_basic_nhl > tbody > tr')
+  input#bt_data(type='submit', value='Get Data using jquery/jsdom')
+  br
+  br
 
-    input(type='submit', value='Get Data')
+  .input-group
+    span.input-group-addon root
+    input.form-control#tb_table_root(type='text', aria-describedby='basic-addon1'
+      , value='#stats_basic_nhl tr')
+  .input-group
+    span.input-group-addon header
+    input.form-control#tb_table_header(type='text', aria-describedby='basic-addon1'
+    , value='th')
+    span.input-group-addon data
+    input.form-control#tb_table_data(type='text', aria-describedby='basic-addon1'
+    , value='td')
+    
 
+  input#bt_table(type='submit', value='Get Table using labwingslab/x-ray')
+
+  ul.list-group
+    li.list-group-item
+      button.btn.btn-primary(type='button') Table: 
+        span.badge #{scrapedTableCount}
+      | #{scrapedTable}
+        
 template(name='urlbottom')
   // iframe for url
   h3 page to scrape
