@@ -11,7 +11,6 @@ if Meteor.isClient
     "click #reset": () ->  Meteor.call "resetAll"
       
     "click #bt_header": (event) ->
-      console.log "heade value", tb_header
       Meteor.call "chScrape"
         , tb_url.value
         , tb_header.value
