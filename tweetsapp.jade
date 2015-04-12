@@ -13,49 +13,42 @@ template(name='navbar')
             // each loop requires js helper, value gets assigned to unknown text
             each arr3
               span.icon-bar
-          a.navbar-brand(href='/') Tweet app
+          a.navbar-brand(href='/') TableScraper
         #navbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.active: a(href='/') Home
-            li: a(href='vid') Video
+            li: a(href='vid') Video tutorial
             li: a(href='git') Github
 
 template(name='tweets')
-  h1 Rant!
+  h3 Select URL to scrape, provide data formats, then press Get Data
+  
+  //reset all
+  button.btn.btn-danger#reset Reset all results
   .input-group
     span.input-group-addon url
     input.form-control#tb_url(type='text', aria-describedby='basic-addon2'
       , value='http://www.hockey-reference.com/players/s/shacked01.html')
-  p.lead
-    ul.list-group
-      li.list-group-item
-        button.btn.btn-primary(type='button') Header 
-          span.badge #{scrapedHeaderCount}
-        | #{scrapedHeader}
-
-      li.list-group-item
-        button.btn.btn-primary(type='button') Data: 
-          span.badge #{scrapedDataCount}
-        | #{scrapedData}
-
+      
+  //input_header
   .input-group
     span.input-group-addon selector
     input.form-control#tb_header(type='text', aria-describedby='basic-addon1'
-      , value='#stats_basic_nhl > thead > tr:nth-child(2)')
-
-  input#bt_header(type='submit', value='Get Header using cheerio.js')
+      , value='#{headerDefaultFormat}')
+  button.btn.btn-primary#bt_header Get Header using cheerio.js
   br
   br
 
+  //input_data
   .input-group
     span.input-group-addon selector
     input.form-control#tb_data(type='text', aria-describedby='basic-addon1'
-      , value='#stats_basic_nhl > tbody > tr')
-
-  input#bt_data(type='submit', value='Get Data using jquery/jsdom')
+      , value='#{dataDefaultFormat}')
+  button.btn.btn-primary#bt_data Get Data using jquery/jsdom
   br
   br
 
+  //input_table
   .input-group
     span.input-group-addon root
     input.form-control#tb_table_root(type='text', aria-describedby='basic-addon1'
@@ -67,16 +60,18 @@ template(name='tweets')
     span.input-group-addon data
     input.form-control#tb_table_data(type='text', aria-describedby='basic-addon1'
     , value='td')
-    
+  button.btn.btn-primary#bt_table Get Table using labwingslab/x-ray')
 
-  input#bt_table(type='submit', value='Get Table using labwingslab/x-ray')
+  // output results
+  p.lead
+    ul.list-group
+      each results
+        li.list-group-item
+          button.btn.btn-default(type='button') #{label} 
+            span.badge #{count}
+          | #{text}
 
-  ul.list-group
-    li.list-group-item
-      button.btn.btn-primary(type='button') Table: 
-        span.badge #{scrapedTableCount}
-      | #{scrapedTable}
-        
+
 template(name='urlbottom')
   // iframe for url
   h3 page to scrape

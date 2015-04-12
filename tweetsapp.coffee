@@ -3,24 +3,24 @@ tweetFormat = "#stream-items-id > li:nth-child(n) > div > div > p"
 hockeyUrl = "http://www.hockey-reference.com/players/s/shacked01.html"
 hockeyFormat = "#stats_basic_nhl > thead > tr:nth-child(2)"
 
+Results = new Mongo.Collection ('results')
+
 if Meteor.isClient
+  Meteor.subscribe 'results'
   Template.tweets.events
+    "click #reset": () ->  Meteor.call "resetAll"
+      
     "click #bt_header": (event) ->
+      console.log "heade value", tb_header
       Meteor.call "chScrape"
         , tb_url.value
         , tb_header.value
-        , (error, result) ->
-          console.log "click ", result
-          Session.set "header", result
       false
 
     "click #bt_data": (event) ->
       Meteor.call "jqScrape"
         , tb_url.value
         , tb_data.value
-        , (error, result) ->
-          console.log "click ", result
-          Session.set "data", result
       false
 
     "click #bt_table": (event) ->
@@ -29,31 +29,47 @@ if Meteor.isClient
         , tb_table_root.value
         , tb_table_header.value
         , tb_table_data.value
-        , (error, result) ->
-          console.log "click ", result
-          Session.set "table", result
       false
       
   Template.navbar.helpers
     arr3: -> [1..3]
   Template.tweets.helpers
-    scrapedHeaderCount: -> (Session.get "header").length
-    scrapedHeader:      -> (Session.get "header").join(" ")
-    scrapedDataCount:   -> (Session.get "data").length
-    scrapedData:        -> (Session.get "data").join(" ")
-    scrapedTalbeCount:   -> (Session.get "table").length
-    scrapedTable:        -> (Session.get "table").join(" ")
+    results: -> Results.find()
+    headerDefaultFormat: "#stats_basic_nhl > thead > tr:nth-child(2)"
+    dataDefaultFormat: "#stats_basic_nhl > tbody > tr"
+
+savetoDB = (label, scraperes) ->
+  console.log "savetoDB", label, scraperes
+  query = label: label
+  recs = (Results.find query)
+  if recs.count() is 0
+    console.log "chresult empty, create new record", recs.count()
+    Results.insert
+      label: label
+      text: scraperes.join(" ")
+      count: scraperes.length
+  else
+    console.log label, recs.count(), " record found. updating"
+    recs.map (doc, i, c) ->
+      Results.update doc._id, $set:
+        text: scraperes.join(" ")
+        count: scraperes.length
 
 if Meteor.isServer
-  Meteor.startup ->
-    Meteor.call "chScrape"
-      , hockeyUrl
-      , hockeyFormat
-      , (error, result) ->
+  Meteor.publish 'results', -> Results.find()
 
   Meteor.methods
+    resetAll: () ->
+      console.log "resetAll"
+      recs = Results.find()
+      recs.map (doc, i, c) ->
+        Results.update doc._id, $set:
+          text: ""
+          count: 0
+      
     ###  scrape using cheerio.js ###
     chScrape: (url, format) -> 
+      console.log "chScrape", url, format
       html = Meteor.http.get url
 
       $ = Meteor.npmRequire("cheerio").load html.content
@@ -62,8 +78,8 @@ if Meteor.isServer
           console.log "chResults: ", elemtext
           elemtext
         .get()
-      chResults
-  
+      savetoDB "chResults", chResults
+
     ###  scrape using jsdom/jquery ###
     jqScrape: (url,format) ->
       html = Meteor.http.get url
@@ -78,7 +94,7 @@ if Meteor.isServer
           console.log "jqResults: ", elemtext
           elemtext
         .get()
-      jqResults
+      savetoDB "jqResults", jqResults
       
     ###  scrape using x-ray.js ###
     xrayScrape: (url, root, header, data) -> 
@@ -97,5 +113,5 @@ if Meteor.isServer
             rowtext
           future.return rowtextarr
       xrayResults = do future.wait
-      xrayResults
+      savetoDB "xrayResults", xrayResults
     #    .write(process.stdout)
