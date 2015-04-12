@@ -1,0 +1,71 @@
+template(name='amazon')
+  .page-header
+    h3 Scrape Amazon Product Details (experimental)
+    | only works for phone listings
+  .input-group
+    | sample amazon URLs
+    br
+    select.form-control#sample_urls
+      each sample_url_values
+        option(value="#{.}") #{.}
+  br
+  .input-group
+    span.input-group-addon url
+    input.form-control#tb_amzn(type='text', aria-describedby='basic-addon2'
+      , value='#{url}')
+  .input-group
+    span.input-group-addon root
+    input.form-control#tb_amzn_root(type='text', aria-describedby='basic-addon1'
+      , value='#{root}')
+  .input-group
+    span.input-group-addon name
+    input.form-control#tb_amzn_name(type='text', aria-describedby='basic-addon1'
+      , value='#{sel_name}')
+    span.input-group-addon img
+    input.form-control#tb_amzn_imgsrc(type='text', aria-describedby='basic-addon1'
+      , value='#{img_src}')
+  .input-group
+    span.input-group-addon dataroot
+    input.form-control#tb_amzn_dataroot(type='text', aria-describedby='basic-addon1'
+    , value='#{dataroot}')
+  .input-group
+    span.input-group-addon header
+    input.form-control#tb_amzn_header(type='text', aria-describedby='basic-addon1'
+    , value='#{sel_header}')
+    span.input-group-addon data
+    input.form-control#tb_amzn_data(type='text', aria-describedby='basic-addon1'
+    , value='#{sel_data}')
+  .input-group
+    button.btn.btn-primary#bt_amazon(type='button') Get Amazon Product Data from URL
+
+  .panel
+    .panel-heading
+      h2 Products Extracted
+      //reset all
+      button.btn.btn-warning#amzn_reset Reset all results
+
+    .panel-body
+      +tabular table=TabularTables.Products class="table table-striped table-bordered table-condensed"
+
+template(name='amazonProducts')
+  img(src='#{amzn_img_src}',style="max-height: 300px; max-width: 266px;")
+//  button.btn.btn-xs.edit_product(type='button') Edit product
+
+//TODO: create responsive pinterest style layout
+//
+//  button.btn-success#bt_amazon Add to DB
+//
+//  p.lead
+//    ul.list-group
+//      li.list-group-item
+//        button.btn.btn-default(type='button') Name 
+//          span.badge #{nameCount}
+//        | #{name}
+//
+//      li.list-group-item
+//        button.btn.btn-default(type='button') Details: 
+//          span.badge #{detailsCount}
+//        | #{header}
+//      li.list-group-item
+//        | #{data}
+//      img(src='#{img_src}',style="max-height: 300px; max-width: 266px;")

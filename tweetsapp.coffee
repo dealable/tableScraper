@@ -3,7 +3,7 @@ tweetFormat = "#stream-items-id > li:nth-child(n) > div > div > p"
 hockeyUrl = "http://www.hockey-reference.com/players/s/shacked01.html"
 hockeyFormat = "#stats_basic_nhl > thead > tr:nth-child(2)"
 
-Results = new Mongo.Collection ('results')
+Results = new Mongo.Collection 'results'
 
 if Meteor.isClient
   Meteor.subscribe 'results'

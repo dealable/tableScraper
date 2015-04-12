@@ -11,6 +11,8 @@ Router.route '/',
 
 Router.route 'git'
 Router.route 'vid'
+Router.route 'amazon', 
+  data: amzn
 
 Router.route '/post/:_id', ->
   @layout 'ApplicationLayout'
