@@ -1,0 +1,285 @@
+@import url("http://fonts.googleapis.com/css?family=Jura")
+
+=keyframes($name)
+  @-webkit-keyframes #{$name}
+    @content
+  @-moz-keyframes #{$name}
+    @content
+  @-ms-keyframes #{$name}
+    @content
+  @keyframes #{$name}
+    @content
+
++keyframes(loading)
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+  
++keyframes(tutsFade)
+  0%
+    opacity: 100%;
+  100%
+    opacity: 0;
+
++keyframes(example)
+  0%
+    from {background-color: red;}
+  100%
+    to {background-color: yellow;}
+
++keyframes(square-to-circle)
+    0%{ border-radius: 0 0 0 0;}
+    25%{border-radius: 50% 0 0 0 0;}
+    50%{border-radius: 50% 50% 0 0;}
+    75%{ border-radius: 50% 50% 50% 0;}
+    100%{border-radius: 50%;}
+
++keyframes(mymove)
+  from {top:0px;}
+  to {top:200px;}
+
+#draw1
+    width: 100px
+    height: 100px
+    background-color: coral;
+    -webkit-animation: example 4s 1s infinite linear alternate
+
+#draw2
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 100px solid red;
+	content: "";
+
+
+#draw3
+	width: 100px;
+	height: 100px;
+	background: red;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+
+#draw4
+	width: 100px;
+	height: 50px;
+	background: red;
+	-webkit-border-radius: 300px 100px 25px
+#draw5
+	width: 0;
+	height: 0;
+	border-left: 50px solid blue;
+	border-right: 50px solid blue;
+	border-bottom: 50px solid red;
+	border-top: 0px solid red;
+
+
+#draw22
+  width:100px;
+  height:100px;
+  background:red;
+  position: relative
+  -webkit-animation: mymove 10s infinite
+  
+  
+#triangle-down
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 100px solid red;
+
+#triangle-left
+	width: 0;
+	height: 0;
+	border-top: 50px solid transparent;
+	border-right: 100px solid red;
+	border-bottom: 50px solid transparent;
+
+#triangle-right
+	width: 0;
+	height: 0;
+	border-top: 50px solid transparent;
+	border-left: 100px solid red;
+	border-bottom: 50px solid transparent;
+
+
+#triangle-topleft
+	width: 0;
+	height: 0;
+	border-top: 100px solid red;
+	border-right: 100px solid transparent;
+
+#heart
+    position: relative;
+    width: 100px;
+    height: 90px;
+
+
+#heart:before,
+#heart:after
+    position: absolute;
+    content: "";
+    left: 50px;
+    top: 0;
+    width: 50px;
+    height: 80px;
+    background: red;
+    -moz-border-radius: 50px 50px 0 0;
+    border-radius: 50px 50px 0 0;
+//    -webkit-transform: rotate(-45deg);
+//      -moz-transform: rotate(-45deg);
+//        -ms-transform: rotate(-45deg);
+//         -o-transform: rotate(-45deg);
+//            transform: rotate(-45deg);
+//    -webkit-transform-origin: 0 100%;
+//       -moz-transform-origin: 0 100%;
+//        -ms-transform-origin: 0 100%;
+//         -o-transform-origin: 0 100%;
+//            transform-origin: 0 100%;
+
+#heart:after
+    left: 0;
+//    -webkit-transform: rotate(45deg);
+//       -moz-transform: rotate(45deg);
+//        -ms-transform: rotate(45deg);
+//         -o-transform: rotate(45deg);
+//            transform: rotate(45deg);
+//    -webkit-transform-origin: 100% 100%;
+//       -moz-transform-origin: 100% 100%;
+//        -ms-transform-origin: 100% 100%;
+//         -o-transform-origin: 100% 100%;
+//            transform-origin :100% 100%;
+
+
+#w1_face
+  &::after, &::before
+    position: absolute
+    content: ""
+    transform-origin: 0 100%
+    -webkit-transform: rotateY(30deg)
+  &::after
+    width: 90%
+    height: 90%
+    left: 10%
+    top: 5%
+    background-color: #151414
+    border-radius: 100px
+    z-index: 3
+    -webkit-transform: rotateY(30deg)
+  &::before
+    width: 95%
+    height: 95%
+    left: 5%
+    top: 2.5%
+    background-color: #e0d1c0
+    border-radius: 100px
+    z-index: 2
+    -webkit-transform: rotateY(20deg)
+  position: relative
+  width: 130px
+  height: 130px
+  background-color: #585858
+  z-index: 1
+  -webkit-transform: rotateY(30deg)
+  border-radius: 100px
+
+.shape
+  padding: 20px 0px
+  margin: 0px
+  display: block
+
+#w1_strap_t1, #w1_strap_b1
+  position: absolute
+  width: 40%
+  height: 30%
+  left: 30%
+  background-color: #4b4b4b
+
+#w1_strap_t1
+  top: -20%
+
+#w1_strap_b1
+  bottom: -20%
+
+#w1_foot_l, #w1_foot_r
+  position: absolute
+  width: 15%
+  height: 22%
+  top: 38%
+  background-color: #40cbd6
+  z-index: 4
+  -webkit-transform: rotateY(30deg)
+
+#w1_foot_l
+  position: relative
+  left: 32%
+  border-radius: 30% 30% 100% 60%
+  &::before, &::after
+    position: absolute
+    content: ""
+    transform-origin: 0 100%
+    width: 20px
+    height: 20px
+    z-index: 5
+    -webkit-transform: rotateY(30deg)
+
+#w1_foot_r
+  &::before, &::after
+    position: absolute
+    content: ""
+    transform-origin: 0 100%
+    width: 20px
+    height: 20px
+    z-index: 5
+    -webkit-transform: rotateY(30deg)
+
+#w1_foot_l
+  &::after
+    top: -25%
+    left: 0%
+    width: 30%
+    height: 10%
+    border-left: 13px solid transparent
+    border-bottom: 5px solid #40cbd6
+  &::before
+    top: -30%
+    left: 75%
+    width: 25%
+    height: 25%
+    border-radius: 40%
+    background-color: #40cbd6
+
+#w1_foot_r
+  left: 52%
+  top: 27%
+  border-radius: 30% 30% 50% 80%
+  &::after
+    top: -25%
+    right: 0%
+    width: 30%
+    height: 10%
+    border-right: 12px solid transparent
+    border-bottom: 5px solid #40cbd6
+  &::before
+    top: -30%
+    left: 5%
+    width: 25%
+    height: 25%
+    border-radius: 40%
+    background-color: #40cbd6
+
+#disp_steps
+  font-family: 'Jura', sans-serif
+  position: absolute
+  width: 40%
+  height: 30%
+  left: 34%
+  top: 57%
+  color: #67c5e2
+  z-index: 4
+  -webkit-transform: rotateY(30deg)
+
+
